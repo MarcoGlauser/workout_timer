@@ -5,12 +5,22 @@ import 'package:workout_timer/models/Workout.dart';
 
 class WorkoutListProvider extends ChangeNotifier{
   final List<Workout> _workouts = [];
+  Workout _activeWorkout;
 
   UnmodifiableListView<Workout> get workouts => UnmodifiableListView(_workouts);
-  List<Workout> get workoutsIterable => _workouts;
+
+  Workout get activeWorkout{
+    return _activeWorkout;
+  }
+
+  set activeWorkout(Workout workout){
+    _activeWorkout = workout;
+    notifyListeners();
+  }
 
   void addWorkout(Workout workout){
     _workouts.add(workout);
+    workout.addListener(workoutChanged);
     notifyListeners();
   }
 
@@ -25,6 +35,10 @@ class WorkoutListProvider extends ChangeNotifier{
 
   void deleteWorkout(Workout workout){
     _workouts.remove(workout);
+    notifyListeners();
+  }
+
+  void workoutChanged(){
     notifyListeners();
   }
 }

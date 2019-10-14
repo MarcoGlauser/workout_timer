@@ -10,16 +10,18 @@ class Workout extends ChangeNotifier{
   int _repetitions;
   Duration _break;
 
-  Workout({String name, int repetitions=1, Duration breakDuration = const Duration(seconds: 20)}){
+  Workout({String name, int repetitions=1, Duration breakDuration = const Duration(seconds: 5)}){
     _name = name;
     _repetitions = repetitions;
     _break = breakDuration;
   }
 
   UnmodifiableListView<Exercise> get exercises => UnmodifiableListView(_exercises);
+
   String get name => _name;
   int get repetitions => _repetitions;
   Duration get breakDuration => _break;
+
   Duration get totalDuration {
     Duration total = Duration();
     for(Exercise exercise in _exercises){

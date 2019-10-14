@@ -7,7 +7,6 @@ import 'package:workout_timer/provider/WorkoutListProvider.dart';
 import 'package:workout_timer/theme.dart';
 import 'package:workout_timer/ui/screens/HomeScreen.dart';
 
-import 'models/Workout.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,13 +27,11 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          builder: (_) => Workout(),
-        ),
-        ChangeNotifierProvider(
           builder: (_) => WorkoutListProvider(),
         ),
-        ChangeNotifierProvider(
-          builder: (context) => CountdownProvider(context),
+        ChangeNotifierProxyProvider<WorkoutListProvider, CountdownProvider>(
+          initialBuilder: (_) => CountdownProvider(),
+          builder: (_, workoutListProvider, countdownProvider) => countdownProvider..workout=workoutListProvider.activeWorkout
         ),
         StreamProvider<FirebaseUser>.value(value: FirebaseAuth.instance.onAuthStateChanged),
       ],

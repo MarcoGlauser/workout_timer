@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_timer/models/Workout.dart';
-import 'package:workout_timer/provider/CountdownProvider.dart';
+import 'package:workout_timer/provider/WorkoutListProvider.dart';
 import 'package:workout_timer/ui/screens/WorkoutScreen.dart';
 
 import '../WorkoutActiveScreen.dart';
@@ -10,10 +10,6 @@ class WorkoutListItem extends StatelessWidget {
   final Workout workout;
 
   const WorkoutListItem({Key key, this.workout}) : super(key: key);
-
-  void fillCountdownProvider(context) {
-    Provider.of<CountdownProvider>(context).exercises = workout.exercises;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +53,7 @@ class WorkoutListItem extends StatelessWidget {
                       ],
                     ),
                     onPressed: () {
-                      fillCountdownProvider(context);
+                      Provider.of<WorkoutListProvider>(context).activeWorkout = workout;
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -74,17 +70,11 @@ class WorkoutListItem extends StatelessWidget {
                       ],
                     ),
                     onPressed: () {
+                      Provider.of<WorkoutListProvider>(context).activeWorkout = workout;
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ChangeNotifierProvider.value(
-                            value: workout,
-                            child: Consumer<Workout>(
-                              builder: (context, workout, child) {
-                                return WorkoutScreen(workout: workout);
-                              },
-                            ),
-                          ),
+                          builder: (context) => WorkoutScreen(),
                         ),
                       );
                     },
