@@ -7,10 +7,10 @@ import 'package:workout_timer/models/Exercise.dart';
 class Workout extends ChangeNotifier{
   final List<Exercise> _exercises = [];
   String _name;
-  int _repetitions = 1;
-  Duration _break = Duration(seconds: 20);
+  int _repetitions;
+  Duration _break;
 
-  Workout({String name, int repetitions=1, Duration breakDuration}){
+  Workout({String name, int repetitions=1, Duration breakDuration = const Duration(seconds: 20)}){
     _name = name;
     _repetitions = repetitions;
     _break = breakDuration;

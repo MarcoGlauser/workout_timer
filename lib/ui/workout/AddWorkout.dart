@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_timer/models/Workout.dart';
 import 'package:workout_timer/provider/WorkoutListProvider.dart';

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:workout_timer/provider/CountdownProvider.dart';
 import 'package:workout_timer/provider/WorkoutListProvider.dart';
 import 'package:workout_timer/theme.dart';
-import 'package:workout_timer/ui/HomeScreen.dart';
+import 'package:workout_timer/ui/screens/HomeScreen.dart';
 
 import 'models/Workout.dart';
 

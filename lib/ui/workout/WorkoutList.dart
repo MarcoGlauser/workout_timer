@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_timer/models/Workout.dart';
 import 'package:workout_timer/provider/WorkoutListProvider.dart';
-import 'package:workout_timer/ui/WorkoutListItem.dart';
+
+import 'WorkoutListItem.dart';
 
 class WorkoutList extends StatelessWidget {
   final List<Workout> workouts;

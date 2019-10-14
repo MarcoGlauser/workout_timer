@@ -3,9 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:workout_timer/models/Workout.dart';
 import 'package:workout_timer/provider/CountdownProvider.dart';
 
-import 'Exercise/AddExercise.dart';
-import 'Exercise/ExerciseList.dart';
-import 'WorkoutActiveScreen.dart';
+import '../Exercise/AddExercise.dart';
+import '../Exercise/ExerciseList.dart';
 
 class WorkoutScreen extends StatelessWidget {
   final Workout workout;
@@ -29,7 +28,7 @@ class WorkoutScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Row(children: <Widget>[
               Expanded(
@@ -64,8 +63,15 @@ class WorkoutScreen extends StatelessWidget {
                 ),
               ),
             ]),
-            ExerciseList(
-              exercises: workout.exercises,
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  ExerciseList(
+                    exercises: workout.exercises,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
