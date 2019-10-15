@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_timer/provider/WorkoutListProvider.dart';
+import 'package:workout_timer/ui/workout/WorkoutOptions.dart';
 
 import '../AddSubtract.dart';
 import '../Exercise/AddExercise.dart';
@@ -16,6 +17,9 @@ class WorkoutScreen extends StatelessWidget {
             title: Text(
               workoutListProvider.activeWorkout.name,
             ),
+            actions: <Widget>[
+              WorkoutOptions(workout: workoutListProvider.activeWorkout),
+            ],
           ),
           body: SafeArea(
             child: Column(
@@ -34,24 +38,26 @@ class WorkoutScreen extends StatelessWidget {
                               child: Text(
                                   "${workoutListProvider.activeWorkout.repetitions} Repetition",
                                   style: Theme.of(context).textTheme.title),
-                              onAdd: (){
-                                workoutListProvider.activeWorkout.increaseRepetitions();
+                              onAdd: () {
+                                workoutListProvider.activeWorkout
+                                    .increaseRepetitions();
                               },
-                              onSubtract: (){
-                                workoutListProvider.activeWorkout.decreaseRepetitions();
+                              onSubtract: () {
+                                workoutListProvider.activeWorkout
+                                    .decreaseRepetitions();
                               },
                             ),
                             AddSubtract(
-                              child:
-                                Text(
-                                    "${workoutListProvider.activeWorkout.breakDuration.inMinutes.toString().padLeft(2,'0')}:${(workoutListProvider.activeWorkout.breakDuration.inSeconds%60).toString().padLeft(2,'0')}  Break",
-                                    style:
-                                        Theme.of(context).textTheme.title),
-                              onAdd: (){
-                                workoutListProvider.activeWorkout.increaseBreak();
+                              child: Text(
+                                  "${workoutListProvider.activeWorkout.breakDuration.inMinutes.toString().padLeft(2, '0')}:${(workoutListProvider.activeWorkout.breakDuration.inSeconds % 60).toString().padLeft(2, '0')}  Break",
+                                  style: Theme.of(context).textTheme.title),
+                              onAdd: () {
+                                workoutListProvider.activeWorkout
+                                    .increaseBreak();
                               },
-                              onSubtract: (){
-                                workoutListProvider.activeWorkout.decreaseBreak();
+                              onSubtract: () {
+                                workoutListProvider.activeWorkout
+                                    .decreaseBreak();
                               },
                             ),
                           ],
