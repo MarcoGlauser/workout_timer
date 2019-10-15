@@ -1,5 +1,6 @@
 
 import 'dart:collection';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:workout_timer/models/Exercise.dart';
@@ -46,6 +47,29 @@ class Workout extends ChangeNotifier{
   set breakDuration(Duration breakDuration){
     _break = breakDuration;
     notifyListeners();
+  }
+
+  void increaseRepetitions(){
+    _repetitions += 1;
+    notifyListeners();
+  }
+
+  void decreaseRepetitions(){
+    _repetitions = max(1, _repetitions-1);
+    notifyListeners();
+  }
+
+  void increaseBreak(){
+    _break += Duration(seconds: 1);
+    notifyListeners();
+  }
+
+  void decreaseBreak(){
+    Duration oneSecond = Duration(seconds: 1);
+    if((_break - oneSecond).inSeconds >= 0){
+      _break = (_break - oneSecond);
+      notifyListeners();
+    }
   }
 
   void addExercise(Exercise exercise){

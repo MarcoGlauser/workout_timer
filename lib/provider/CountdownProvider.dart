@@ -21,7 +21,10 @@ class CountdownProvider extends ChangeNotifier {
           _queue.add(exercise);
         } else {
           _queue.add(exercise);
-          _queue.add(Exercise(name: 'Break', duration: workout.breakDuration));
+          if(workout.breakDuration.inSeconds > 0) {
+            _queue.add(
+                Exercise(name: 'Break', duration: workout.breakDuration));
+          }
         }
       }
     }
