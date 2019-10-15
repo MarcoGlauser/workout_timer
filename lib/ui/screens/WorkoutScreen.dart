@@ -15,9 +15,7 @@ class WorkoutScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text(
               workoutListProvider.activeWorkout.name,
-              style: Theme.of(context).textTheme.display1,
             ),
-            elevation: 0,
           ),
           body: SafeArea(
             child: Column(
@@ -27,41 +25,34 @@ class WorkoutScreen extends StatelessWidget {
                 Row(children: <Widget>[
                   Expanded(
                     child: Container(
-                      color: Theme.of(context).primaryColor,
                       child: Padding(
-                        padding: const EdgeInsets.only(bottom: 24.0),
+                        padding: const EdgeInsets.symmetric(vertical: 24.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: AddSubtract(
-                                child: Text(
-                                    "${workoutListProvider.activeWorkout.repetitions} Repetition",
-                                    style: Theme.of(context).textTheme.title),
-                                onAdd: (){
-                                  workoutListProvider.activeWorkout.increaseRepetitions();
-                                },
-                                onSubtract: (){
-                                  workoutListProvider.activeWorkout.decreaseRepetitions();
-                                },
-                              ),
+                            AddSubtract(
+                              child: Text(
+                                  "${workoutListProvider.activeWorkout.repetitions} Repetition",
+                                  style: Theme.of(context).textTheme.title),
+                              onAdd: (){
+                                workoutListProvider.activeWorkout.increaseRepetitions();
+                              },
+                              onSubtract: (){
+                                workoutListProvider.activeWorkout.decreaseRepetitions();
+                              },
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: AddSubtract(
-                                child:
-                                  Text(
-                                      "${workoutListProvider.activeWorkout.breakDuration.inMinutes.toString().padLeft(2,'0')}:${(workoutListProvider.activeWorkout.breakDuration.inSeconds%60).toString().padLeft(2,'0')}  Break",
-                                      style:
-                                          Theme.of(context).textTheme.title),
-                                onAdd: (){
-                                  workoutListProvider.activeWorkout.increaseBreak();
-                                },
-                                onSubtract: (){
-                                  workoutListProvider.activeWorkout.decreaseBreak();
-                                },
-                              ),
+                            AddSubtract(
+                              child:
+                                Text(
+                                    "${workoutListProvider.activeWorkout.breakDuration.inMinutes.toString().padLeft(2,'0')}:${(workoutListProvider.activeWorkout.breakDuration.inSeconds%60).toString().padLeft(2,'0')}  Break",
+                                    style:
+                                        Theme.of(context).textTheme.title),
+                              onAdd: (){
+                                workoutListProvider.activeWorkout.increaseBreak();
+                              },
+                              onSubtract: (){
+                                workoutListProvider.activeWorkout.decreaseBreak();
+                              },
                             ),
                           ],
                         ),

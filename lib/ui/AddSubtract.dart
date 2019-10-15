@@ -18,21 +18,24 @@ class AddSubtract extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        FlatButton(
-          child: Icon(Icons.remove),
-          onPressed: onSubtract,
-        ),
-        child,
-        MaterialButton(
-          child: Icon(Icons.add),
-          onPressed: onAdd,
-
-          elevation: 5,
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          FlatButton(
+            child: Icon(Icons.remove),
+            onPressed: onSubtract,
+            textColor: Theme.of(context).primaryColor,
+          ),
+          child,
+          FlatButton(
+            child: Icon(Icons.add),
+            onPressed: onAdd,
+            textColor: Theme.of(context).primaryColor,
+          ),
+        ],
+      ),
     );
   }
 }

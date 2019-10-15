@@ -49,7 +49,10 @@ class WorkoutListItem extends StatelessWidget {
                   FlatButton(
                     child: Column(
                       children: <Widget>[
-                        Icon(Icons.alarm),
+                        Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Icon(Icons.alarm),
+                        ),
                         const Text('Start Workout'),
                       ],
                     ),
@@ -66,7 +69,10 @@ class WorkoutListItem extends StatelessWidget {
                   FlatButton(
                     child: Column(
                       children: <Widget>[
-                        Icon(Icons.edit),
+                        Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Icon(Icons.edit),
+                        ),
                         const Text('Edit'),
                       ],
                     ),
