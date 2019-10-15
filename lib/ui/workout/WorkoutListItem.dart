@@ -33,6 +33,7 @@ class WorkoutListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text("${workout.exercises.length} Exercises "),
+                  Text("${workout.repetitions} Repetitions "),
                   Text(
                       "${workout.totalDuration.inMinutes}:${(workout.totalDuration.inSeconds % 60).toString().padLeft(2, '0')} total time"),
                 ],

@@ -16,17 +16,33 @@ class CountdownProvider extends ChangeNotifier {
   set workout(Workout workout) {
     _queue.clear();
     if (workout != null) {
+      _addExercisesFromWorkout(workout);
+    }
+  }
+
+  _addExercisesFromWorkout(Workout workout){
+    for(int i in Iterable.generate(workout.repetitions)) {
       for (Exercise exercise in workout.exercises) {
         if (exercise == workout.exercises.last) {
-          _queue.add(exercise);
+          _addExercise(exercise);
         } else {
-          _queue.add(exercise);
-          if(workout.breakDuration.inSeconds > 0) {
-            _queue.add(
-                Exercise(name: 'Break', duration: workout.breakDuration));
-          }
+          _addExercise(exercise);
+          _addBreak(workout.breakDuration);
         }
       }
+      if(i != workout.repetitions-1){
+        _addBreak(workout.breakDuration);
+      }
+    }
+  }
+
+  void _addExercise(Exercise exercise,{Duration breakDuration}){
+    _queue.add(exercise);
+  }
+
+  void _addBreak(Duration breakDuration){
+    if(breakDuration.inSeconds > 0){
+      _queue.add( Exercise(name: 'Break', duration: breakDuration));
     }
   }
 
