@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 import 'package:workout_timer/models/Exercise.dart';
 import 'package:workout_timer/models/Workout.dart';
+import 'package:workout_timer/provider/DatabaseService.dart';
+import 'package:workout_timer/ui/screens/HomeScreen.dart';
 
 
 class AddExercise extends StatefulWidget {
@@ -24,71 +27,75 @@ class _AddExerciseState extends State<AddExercise>{
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Add Exercise'),
-      ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Login(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Add Exercise'),
+        ),
+        body: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
 
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
-                child: TextFormField(
-                  autofocus: true,
-                  // The validator receives the text that the user has entered.
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                      labelText: 'Exercise Name'
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  child: TextFormField(
+                    autofocus: true,
+                    // The validator receives the text that the user has entered.
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                        labelText: 'Exercise Name'
+                    ),
+                    onSaved: (val) {
+                      print(val);
+                      setState(() => _exercise.name = val);
+                    },
                   ),
-                  onSaved: (val) {
-                    print(val);
-                    setState(() => _exercise.name = val);
-                  },
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
-                child: TextFormField(
-                  // The validator receives the text that the user has entered.
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter a number';
-                    }
-                    return null;
-                  },
-                  inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                      labelText: 'Duration in seconds'
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  child: TextFormField(
+                    // The validator receives the text that the user has entered.
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter a number';
+                      }
+                      return null;
+                    },
+                    inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        labelText: 'Duration in seconds'
+                    ),
+                    onSaved: (val) => setState(() => _exercise.duration = Duration(seconds: int.parse(val))),
                   ),
-                  onSaved: (val) => setState(() => _exercise.duration = Duration(seconds: int.parse(val))),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: RaisedButton(
-                  onPressed: () {
-                    final form = _formKey.currentState;
-                    if (form.validate()) {
-                      form.save();
-                      workout.addExercise(_exercise);
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: Text('Save'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: RaisedButton(
+                    onPressed: () {
+                      final form = _formKey.currentState;
+                      if (form.validate()) {
+                        form.save();
+                        //workout.addExercise(_exercise);
+                        DatabaseService db = GetIt.instance.get<DatabaseService>();
+                        db.saveExercise(workout, _exercise);
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: Text('Save'),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

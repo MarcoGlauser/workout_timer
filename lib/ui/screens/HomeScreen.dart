@@ -1,24 +1,30 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:workout_timer/models/Workout.dart';
+import 'package:workout_timer/provider/DatabaseService.dart';
+import 'package:workout_timer/provider/WorkoutListProvider.dart';
 import 'package:workout_timer/ui/screens/LoginScreen.dart';
-import 'package:workout_timer/ui/screens/WorkoutListScreen.dart';
 
+class Login extends StatelessWidget {
 
+  final Widget child;
 
-class HomeScreen extends StatelessWidget {
+  const Login({Key key, this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return Consumer<FirebaseUser>(
-      builder: (context, user, child) {
-        if(user == null){
+      builder: (context, user, __) {
+        if (user == null) {
           FirebaseAuth.instance.signInAnonymously();
           return LoginScreen();
-        }
-        else{
-          return WorkoutListScreen();
+        } else {
+          final db = DatabaseService(user);
+          GetIt.instance.registerSingleton<DatabaseService>(db);
+          Provider.of<WorkoutListProvider>(context).startListening();
+          return child;
         }
       },
     );
