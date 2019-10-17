@@ -61,7 +61,6 @@ class _AddExerciseState extends State<AddExercise>{
                         labelText: 'Exercise Name'
                     ),
                     onSaved: (val) {
-                      print(val);
                       setState(() => _exercise.name = val);
                     },
                   ),

@@ -50,8 +50,6 @@ class Workout extends ChangeNotifier{
 
   _setExercises(List<Exercise> exercises){
     _exercises = exercises;
-    print(_name);
-    print('loadedExercises');
     notifyListeners();
   }
 

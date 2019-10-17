@@ -30,7 +30,7 @@ class WorkoutOptions extends StatelessWidget{
       onSelected: (value) {
         switch(value){
           case 1:
-            print(Navigator.pop(context));
+            Navigator.pop(context);
             GetIt.instance.get<DatabaseService>().deleteWorkout(workout);
         }
       },

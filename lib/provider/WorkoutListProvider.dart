@@ -66,7 +66,6 @@ class WorkoutListProvider extends ChangeNotifier{
   }
 
   void workoutChanged(){
-    print('workoutChanged');
     notifyListeners();
   }
 }
