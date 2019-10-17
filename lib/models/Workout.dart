@@ -61,11 +61,13 @@ class Workout extends ChangeNotifier{
     Duration total = Duration();
     for(Exercise exercise in _exercises){
       total += exercise.duration;
+      total += _break;
     }
-    if(_exercises.length > 1){
-      total += _break * (exercises.length -1);
+    total *= repetitions;
+    if(repetitions >= 1){
+      total -= _break;
     }
-    return total * repetitions;
+    return total;
   }
 
   set name(String name){
