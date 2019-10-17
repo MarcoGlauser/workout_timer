@@ -21,9 +21,15 @@ class AddExercise extends StatefulWidget {
 class _AddExerciseState extends State<AddExercise>{
   final Workout workout;
   final _formKey = GlobalKey<FormState>();
-  final _exercise = Exercise();
+  Exercise _exercise;
 
   _AddExerciseState(this.workout);
+
+  @override
+  void initState() {
+    super.initState();
+    _exercise = Exercise(workout);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +93,7 @@ class _AddExerciseState extends State<AddExercise>{
                         form.save();
                         //workout.addExercise(_exercise);
                         DatabaseService db = GetIt.instance.get<DatabaseService>();
-                        db.saveExercise(workout, _exercise);
+                        db.saveExercise(_exercise);
                         Navigator.pop(context);
                       }
                     },

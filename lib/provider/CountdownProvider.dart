@@ -42,7 +42,7 @@ class CountdownProvider extends ChangeNotifier {
 
   void _addBreak(Duration breakDuration){
     if(breakDuration.inSeconds > 0){
-      _queue.add( Exercise(name: 'Break', duration: breakDuration));
+      _queue.add( Exercise(null, name: 'Break', duration: breakDuration));
     }
   }
 

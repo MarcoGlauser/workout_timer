@@ -7,12 +7,13 @@ import 'package:workout_timer/ui/screens/HomeScreen.dart';
 import 'package:workout_timer/ui/workout/WorkoutOptions.dart';
 
 import '../AddSubtract.dart';
-import '../Exercise/AddExercise.dart';
-import '../Exercise/ExerciseList.dart';
+import '../exercise/AddExercise.dart';
+import '../exercise/ExerciseList.dart';
 
 class WorkoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print('redraw');
     return Login(
       child: Consumer<WorkoutListProvider>(
         builder: (context, workoutListProvider, child) {

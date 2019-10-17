@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
 import 'package:workout_timer/models/Exercise.dart';
-import 'package:workout_timer/provider/WorkoutListProvider.dart';
+import 'package:workout_timer/provider/DatabaseService.dart';
 
 class ExerciseListItem extends StatelessWidget {
   final Exercise exercise;
@@ -19,7 +19,7 @@ class ExerciseListItem extends StatelessWidget {
           color: Theme.of(context).textTheme.body1.color,
         ),
         onPressed: () {
-          Provider.of<WorkoutListProvider>(context, listen: false).activeWorkout.deleteExercise(exercise);
+          GetIt.instance.get<DatabaseService>().deleteExercise(exercise);
         },
       ),
     );

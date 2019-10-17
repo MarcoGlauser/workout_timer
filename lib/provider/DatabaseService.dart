@@ -22,13 +22,23 @@ class DatabaseService {
     var ref = _db.collection('userData').document(_user.uid).collection('workouts').document(workout.id).collection('exercises');
 
     return ref.snapshots().map((list) =>
-        list.documents.map((doc) => Exercise.fromFirestore(doc)).toList());
+        list.documents.map((doc) => Exercise.fromFirestore(workout, doc)).toList());
   }
+
   Future<void> saveWorkout(Workout workout){
     return _db.collection('userData').document(_user.uid).collection('workouts').document(workout.id).setData(workout.toMap());
   }
 
-  Future<void> saveExercise(Workout workout, Exercise exercise){
-    return _db.collection('userData').document(_user.uid).collection('workouts').document(workout.id).collection('exercises').document(exercise.id).setData(exercise.toMap());
+  Future<void> deleteWorkout(Workout workout){
+    return _db.collection('userData').document(_user.uid).collection('workouts').document(workout.id).delete();
   }
+
+  Future<void> saveExercise(Exercise exercise){
+    return _db.collection('userData').document(_user.uid).collection('workouts').document(exercise.parent.id).collection('exercises').document(exercise.id).setData(exercise.toMap());
+  }
+
+  Future<void> deleteExercise(Exercise exercise){
+    return _db.collection('userData').document(_user.uid).collection('workouts').document(exercise.parent.id).collection('exercises').document(exercise.id).delete();
+  }
+
 }

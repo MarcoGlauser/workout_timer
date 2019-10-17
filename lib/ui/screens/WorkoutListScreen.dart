@@ -5,7 +5,7 @@ import 'package:workout_timer/provider/WorkoutListProvider.dart';
 import 'package:workout_timer/ui/screens/HomeScreen.dart';
 
 import '../workout/AddWorkout.dart';
-import '../Workout/WorkoutList.dart';
+import '../workout/WorkoutList.dart';
 
 
 class WorkoutListScreen extends StatelessWidget {

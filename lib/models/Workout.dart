@@ -52,7 +52,7 @@ class Workout extends ChangeNotifier{
     _exercises = exercises;
     print(_name);
     print('loadedExercises');
-    //notifyListeners();
+    notifyListeners();
   }
 
   String get name => _name;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
 import 'package:workout_timer/models/Workout.dart';
-import 'package:workout_timer/provider/WorkoutListProvider.dart';
+import 'package:workout_timer/provider/DatabaseService.dart';
 
 class WorkoutOptions extends StatelessWidget{
 
@@ -31,7 +31,7 @@ class WorkoutOptions extends StatelessWidget{
         switch(value){
           case 1:
             print(Navigator.pop(context));
-            Provider.of<WorkoutListProvider>(context).deleteWorkout(workout);
+            GetIt.instance.get<DatabaseService>().deleteWorkout(workout);
         }
       },
     );
