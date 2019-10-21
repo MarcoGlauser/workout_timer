@@ -33,6 +33,7 @@ class StreamHandler{
 
   cancelExerciseSubscription(Workout workout){
     streamSubscriptions[workout.id].cancel();
+    streamSubscriptions.remove(workout.id);
   }
 
   void handleWorkoutChange(DocumentChange documentChange){
@@ -47,6 +48,8 @@ class StreamHandler{
           workoutListProvider.reorderWorkout(documentChange.oldIndex, documentChange.newIndex);
         }
         workoutListProvider.updateWorkout(workout);
+        cancelExerciseSubscription(workout);
+        listenForExerciseChanges(workout);
         break;
       case DocumentChangeType.removed:
         workoutListProvider.deleteWorkout(workout);
