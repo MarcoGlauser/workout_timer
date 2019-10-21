@@ -11,7 +11,7 @@ import 'package:workout_timer/provider/DatabaseService.dart';
 class Workout extends ChangeNotifier{
 
   final String id;
-  List<Exercise> _exercises = [];
+  final List<Exercise> _exercises = [];
   String _name;
   int _repetitions;
   Duration _break;
@@ -20,7 +20,6 @@ class Workout extends ChangeNotifier{
     _name = name;
     _repetitions = repetitions;
     _break = breakDuration;
-    _startListening();
   }
 
   factory Workout.fromFirestore(DocumentSnapshot doc){
@@ -43,16 +42,6 @@ class Workout extends ChangeNotifier{
 
   UnmodifiableListView<Exercise> get exercises => UnmodifiableListView(_exercises);
 
-  _startListening() {
-    DatabaseService _db = GetIt.instance.get<DatabaseService>();
-    _db.streamExercises(this).listen(_setExercises);
-  }
-
-  _setExercises(List<Exercise> exercises){
-    _exercises = exercises;
-    notifyListeners();
-  }
-
   String get name => _name;
   int get repetitions => _repetitions;
   Duration get breakDuration => _break;
@@ -64,7 +53,7 @@ class Workout extends ChangeNotifier{
       total += _break;
     }
     total *= repetitions;
-    if(repetitions >= 1){
+    if(_exercises. length > 0 && repetitions > 1){
       total -= _break;
     }
     return total;
@@ -87,25 +76,29 @@ class Workout extends ChangeNotifier{
 
   void increaseRepetitions(){
     _repetitions += 1;
+    notifyListeners();
   }
 
   void decreaseRepetitions(){
     _repetitions = max(1, _repetitions-1);
+    notifyListeners();
   }
 
   void increaseBreak(){
     _break += Duration(seconds: 1);
+    notifyListeners();
   }
 
   void decreaseBreak(){
     Duration oneSecond = Duration(seconds: 1);
     if((_break - oneSecond).inSeconds >= 0){
       _break = (_break - oneSecond);
+      notifyListeners();
     }
   }
 
-  void addExercise(Exercise exercise){
-    _exercises.add(exercise);
+  void addExercise(Exercise exercise, {int index: 0}){
+    _exercises.insert(index, exercise);
     notifyListeners();
   }
 
@@ -119,7 +112,8 @@ class Workout extends ChangeNotifier{
   }
 
   void deleteExercise(Exercise exercise){
-    _exercises.remove(exercise);
+    int deleteIndex = _exercises.indexWhere((Exercise innerExercise) => exercise.id == innerExercise.id);
+    _exercises.removeAt(deleteIndex);
     notifyListeners();
   }
 

@@ -7,33 +7,13 @@ import 'package:workout_timer/models/Workout.dart';
 import 'DatabaseService.dart';
 
 class WorkoutListProvider extends ChangeNotifier{
-  List<Workout> _workouts = [];
+  final List<Workout> _workouts = [];
   Workout _activeWorkout;
-  bool isListening = false;
 
   UnmodifiableListView<Workout> get workouts => UnmodifiableListView(_workouts);
 
   Workout get activeWorkout{
     return _activeWorkout;
-  }
-
-  startListening(){
-    if(!isListening){
-      DatabaseService _db = GetIt.instance.get<DatabaseService>();
-      _db.streamWorkouts().listen(_setWorkouts);
-      isListening = true;
-    }
-  }
-
-  _setWorkouts(List<Workout> workouts){
-    for(Workout workout in _workouts) {
-      workout.removeListener(workoutChanged);
-    }
-    _workouts = workouts;
-    for(Workout workout in _workouts){
-      workout.addListener(workoutChanged);
-    }
-    notifyListeners();
   }
 
   set activeWorkout(Workout workout){
@@ -45,9 +25,16 @@ class WorkoutListProvider extends ChangeNotifier{
     _workouts.indexOf(workout);
   }
 
-  void addWorkout(Workout workout){
-    _workouts.add(workout);
+  void addWorkout(Workout workout, {int index: 0}){
+    _workouts.insert(index, workout);
     workout.addListener(workoutChanged);
+    notifyListeners();
+  }
+
+  void updateWorkout(Workout workout){
+    int updateIndex = _workouts.indexWhere((Workout innerWorkout) => workout.id == innerWorkout.id);
+    _workouts.removeAt(updateIndex);
+    _workouts.insert(updateIndex, workout);
     notifyListeners();
   }
 
@@ -61,7 +48,8 @@ class WorkoutListProvider extends ChangeNotifier{
   }
 
   void deleteWorkout(Workout workout){
-    _workouts.remove(workout);
+    int deleteIndex = _workouts.indexWhere((Workout innerWorkout) => workout.id == innerWorkout.id);
+    _workouts.removeAt(deleteIndex);
     notifyListeners();
   }
 

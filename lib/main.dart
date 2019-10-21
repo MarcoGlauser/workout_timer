@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_timer/provider/CountdownProvider.dart';
+import 'package:workout_timer/provider/StreamHandler.dart';
 import 'package:workout_timer/provider/WorkoutListProvider.dart';
 import 'package:workout_timer/theme.dart';
 import 'package:workout_timer/ui/screens/HomeScreen.dart';
@@ -27,11 +28,13 @@ class MyApp extends StatelessWidget {
 
     GetIt.instance.allowReassignment = true;
 
+    WorkoutListProvider workoutListProvider = WorkoutListProvider();
+    StreamHandler streamHandler = StreamHandler(workoutListProvider);
+    GetIt.instance.registerSingleton(streamHandler);
+
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          builder: (_) => WorkoutListProvider(),
-        ),
+        ChangeNotifierProvider.value(value: workoutListProvider),
         ChangeNotifierProxyProvider<WorkoutListProvider, CountdownProvider>(
             initialBuilder: (_) => CountdownProvider(),
             builder: (_, workoutListProvider, countdownProvider) =>
