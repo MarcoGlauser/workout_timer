@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_timer/models/Exercise.dart';
 import 'package:workout_timer/models/Workout.dart';
+import 'package:workout_timer/provider/DatabaseService.dart';
 
 import 'ExerciseListItem.dart';
 
@@ -27,7 +29,10 @@ class ExerciseList extends StatelessWidget {
         child: ReorderableListView(
           children: getChildrenTasks(),
           onReorder: (oldIndex, newIndex){
-            Provider.of<Workout>(context).reorderExercise(oldIndex, newIndex);
+            double newPseudoIndex = calculateNewIndex(newIndex);
+            Exercise exercise = exercises[oldIndex];
+            exercise.index = newPseudoIndex;
+            GetIt.instance.get<DatabaseService>();
           },
         ),
       );

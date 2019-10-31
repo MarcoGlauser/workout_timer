@@ -4,9 +4,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:workout_timer/models/Exercise.dart';
-import 'package:workout_timer/provider/DatabaseService.dart';
 
 class Workout extends ChangeNotifier{
 
@@ -115,6 +113,19 @@ class Workout extends ChangeNotifier{
     int deleteIndex = _exercises.indexWhere((Exercise innerExercise) => exercise.id == innerExercise.id);
     _exercises.removeAt(deleteIndex);
     notifyListeners();
+  }
+
+
+  List<Exercise> updateExerciseIndices(Workout workout){
+    List<Exercise> updatedExercises = [];
+    for(int i = 0; i < _exercises.length; i++){
+      Exercise exercise = _exercises[i];
+      if(exercise.index != i){
+        exercise.index = i;
+        updatedExercises.add(exercise);
+      }
+    }
+    return updatedExercises;
   }
 
 }

@@ -35,7 +35,8 @@ class DatabaseService {
         .document(_user.uid)
         .collection('workouts')
         .document(workout.id)
-        .collection('exercises');
+        .collection('exercises')
+        .orderBy('index');
 
     return ref.snapshots().transform(snapshotToDocumentChangeTransformer);
   }

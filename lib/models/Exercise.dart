@@ -5,19 +5,21 @@ import 'Workout.dart';
 class Exercise {
   final Workout parent;
   final String id;
+  int index;
   String name;
   Duration duration;
   bool isBreak;
   bool hasBreakAfter;
 
-  Exercise(this.parent, {this.id, this.name, this.duration, this.isBreak: false, this.hasBreakAfter});
+  Exercise(this.parent,{  this.id, this.index, this.name, this.duration, this.isBreak: false, this.hasBreakAfter});
 
-  factory Exercise.fromFirestore(Workout parent, DocumentSnapshot doc){
+  factory Exercise.fromFirestore(Workout parent,int index, DocumentSnapshot doc){
     Map data = doc.data;
 
     return Exercise(
       parent,
       id: doc.documentID,
+      index: index,
       name: data['name'] ?? '',
       duration: Duration(seconds: data['duration'] ?? 0),
       isBreak: false,
@@ -27,6 +29,7 @@ class Exercise {
 
   Map<String, dynamic> toMap(){
     return {
+      'index': index,
       'name': name,
       'duration': duration.inSeconds
     };

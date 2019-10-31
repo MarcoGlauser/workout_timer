@@ -28,7 +28,7 @@ class _AddExerciseState extends State<AddExercise>{
   @override
   void initState() {
     super.initState();
-    _exercise = Exercise(workout);
+    _exercise = Exercise(workout, index: workout.exercises.length);
   }
 
   @override

@@ -1,10 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:workout_timer/models/Workout.dart';
-
-import 'DatabaseService.dart';
 
 class WorkoutListProvider extends ChangeNotifier{
   final List<Workout> _workouts = [];
