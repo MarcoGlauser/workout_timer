@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
 import 'package:workout_timer/models/Exercise.dart';
-import 'package:workout_timer/models/Workout.dart';
 import 'package:workout_timer/provider/DatabaseService.dart';
 
 import 'ExerciseListItem.dart';
@@ -29,14 +27,50 @@ class ExerciseList extends StatelessWidget {
         child: ReorderableListView(
           children: getChildrenTasks(),
           onReorder: (oldIndex, newIndex){
-            double newPseudoIndex = calculateNewIndex(newIndex);
-            Exercise exercise = exercises[oldIndex];
-            exercise.index = newPseudoIndex;
-            GetIt.instance.get<DatabaseService>();
+            reorderExercise(oldIndex, newIndex);
+
           },
         ),
       );
     }
+  }
+
+  reorderExercise(int oldIndex, int newIndex){
+    DatabaseService db = GetIt.instance.get<DatabaseService>();
+    Exercise exercise = exercises[oldIndex];
+    List<Exercise> exercisesToUpdate = updateIndices(newIndex, oldIndex);
+    for(Exercise exercise in exercisesToUpdate){
+      db.saveExercise(exercise);
+    }
+    exercise.index = newIndex;
+    db.saveExercise(exercise);
+  }
+
+  updateIndices(int newIndex,int oldIndex){
+    if(newIndex > oldIndex){
+      return moveUp(oldIndex+1, newIndex);
+    }
+    else{
+      return moveDown(newIndex, oldIndex-1);
+    }
+  }
+
+  moveDown(int start, int end){
+    List<Exercise> exercisesToUpdate = [];
+    for(int i = start; i <= end; i++){
+      exercises[i].index++;
+      exercisesToUpdate.add(exercises[i]);
+    }
+    return exercisesToUpdate;
+  }
+
+  moveUp(int start, int end){
+    List<Exercise> exercisesToUpdate = [];
+    for(int i = start; i <= end; i++){
+      exercises[i].index--;
+      exercisesToUpdate.add(exercises[i]);
+    }
+    return exercisesToUpdate;
   }
 
   List<Widget> getChildrenTasks() {

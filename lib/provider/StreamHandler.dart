@@ -59,20 +59,16 @@ class StreamHandler{
   }
 
   void handleExerciseChange(Workout workout, DocumentChange documentChange){
-    Exercise exercise = Exercise.fromFirestore(workout, documentChange.newIndex, documentChange.document);
+    Exercise exercise = Exercise.fromFirestore(workout, documentChange.document);
     switch(documentChange.type){
       case DocumentChangeType.added:
-        workout.addExercise(exercise, index: documentChange.newIndex);
+        workout.addExercise(exercise);
         break;
       case DocumentChangeType.modified:
-        if(documentChange.oldIndex == documentChange.newIndex){
-          workout.reorderExercise(documentChange.oldIndex, documentChange.newIndex);
-        }
-        updateExerciseIndices(workout);
+        workout.updateExercise(exercise);
         break;
       case DocumentChangeType.removed:
         workout.deleteExercise(exercise);
-        updateExerciseIndices(workout);
         break;
     }
   }

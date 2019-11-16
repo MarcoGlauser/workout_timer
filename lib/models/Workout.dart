@@ -95,37 +95,31 @@ class Workout extends ChangeNotifier{
     }
   }
 
-  void addExercise(Exercise exercise, {int index: 0}){
-    _exercises.insert(index, exercise);
+  void updateExercise(Exercise exercise){
+    print('update');
+    int updateIndex = _exercises.indexWhere((Exercise innerExercise) => exercise.id == innerExercise.id);
+    _exercises.removeAt(updateIndex);
+    _exercises.insert(updateIndex,exercise);
+    _sort();
     notifyListeners();
   }
 
-  void reorderExercise(int oldIndex, int newIndex){
-    if (newIndex > oldIndex) {
-      newIndex -= 1;
-    }
-    final Exercise exercise = _exercises.removeAt(oldIndex);
-    _exercises.insert(newIndex, exercise);
+  void addExercise(Exercise exercise){
+    print('add');
+    _exercises.add(exercise);
+    _sort();
     notifyListeners();
   }
 
   void deleteExercise(Exercise exercise){
+    print('delete');
     int deleteIndex = _exercises.indexWhere((Exercise innerExercise) => exercise.id == innerExercise.id);
     _exercises.removeAt(deleteIndex);
+    _sort();
     notifyListeners();
   }
 
-
-  List<Exercise> updateExerciseIndices(Workout workout){
-    List<Exercise> updatedExercises = [];
-    for(int i = 0; i < _exercises.length; i++){
-      Exercise exercise = _exercises[i];
-      if(exercise.index != i){
-        exercise.index = i;
-        updatedExercises.add(exercise);
-      }
-    }
-    return updatedExercises;
+  _sort(){
+    _exercises.sort((a, b) => a.index.compareTo(b.index));
   }
-
 }
