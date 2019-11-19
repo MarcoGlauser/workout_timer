@@ -73,4 +73,52 @@ class StreamHandler{
     }
   }
 
+  void deleteExercise(Exercise exercise){
+    DatabaseService db = GetIt.instance.get<DatabaseService>();
+    List<Exercise> exercises = exercise.parent.exercises;
+    List<Exercise> exercisesToUpdate = moveUp(exercises, exercise.index, exercises.length);
+    for(Exercise exercise in exercisesToUpdate){
+      db.saveExercise(exercise);
+    }
+    db.deleteExercise(exercise);
+  }
+
+  reorderExercise(Exercise exercise, int oldIndex, int newIndex){
+    DatabaseService db = GetIt.instance.get<DatabaseService>();
+    print(newIndex);
+    List<Exercise> exercisesToUpdate = updateIndices(exercise.parent.exercises, newIndex, oldIndex);
+    for(Exercise exercise in exercisesToUpdate){
+      db.saveExercise(exercise);
+    }
+    exercise.index = newIndex;
+    db.saveExercise(exercise);
+  }
+
+  updateIndices(List<Exercise> exercises, int newIndex,int oldIndex){
+    if(newIndex > oldIndex){
+      return moveUp(exercises, oldIndex+1, newIndex);
+    }
+    else{
+      return moveDown(exercises, newIndex, oldIndex-1);
+    }
+  }
+
+  moveDown(List<Exercise> exercises, int start, int end){
+    List<Exercise> exercisesToUpdate = [];
+    for(int i = start; i <= end; i++){
+      exercises[i].index++;
+      exercisesToUpdate.add(exercises[i]);
+    }
+    return exercisesToUpdate;
+  }
+
+  moveUp(List<Exercise> exercises,int start, int end){
+    List<Exercise> exercisesToUpdate = [];
+    for(int i = start; i <= end; i++){
+      exercises[i].index--;
+      exercisesToUpdate.add(exercises[i]);
+    }
+    return exercisesToUpdate;
+  }
+
 }
