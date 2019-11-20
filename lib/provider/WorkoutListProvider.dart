@@ -31,7 +31,10 @@ class WorkoutListProvider extends ChangeNotifier{
   void updateWorkout(Workout workout){
     int updateIndex = _workouts.indexWhere((Workout innerWorkout) => workout.id == innerWorkout.id);
     _workouts.removeAt(updateIndex);
-    _workouts.insert(updateIndex, workout);
+    addWorkout(workout, index: updateIndex);
+    if(_activeWorkout!= null && _activeWorkout.id == workout.id){
+      _activeWorkout = workout;
+    }
     notifyListeners();
   }
 

@@ -36,20 +36,27 @@ class StreamHandler{
     streamSubscriptions.remove(workout.id);
   }
 
-  void handleWorkoutChange(DocumentChange documentChange){
+  addExercisesSnapshotToWorkout(Workout workout) async{
+    DatabaseService db = GetIt.instance.get<DatabaseService>();
+    QuerySnapshot querySnapshot = await db.exercisesSnapshot(workout);
+    for(DocumentSnapshot documentSnapshot in querySnapshot.documents){
+      Exercise exercise = Exercise.fromFirestore(workout, documentSnapshot);
+      workout.addExercise(exercise);
+    }
+  }
+
+  void handleWorkoutChange(DocumentChange documentChange) async{
     Workout workout = Workout.fromFirestore(documentChange.document);
+    await addExercisesSnapshotToWorkout(workout);
     switch(documentChange.type) {
       case DocumentChangeType.added:
         workoutListProvider.addWorkout(workout,index: documentChange.newIndex);
         listenForExerciseChanges(workout);
         break;
       case DocumentChangeType.modified:
-        if(documentChange.oldIndex == documentChange.newIndex){
-          workoutListProvider.reorderWorkout(documentChange.oldIndex, documentChange.newIndex);
-        }
-        workoutListProvider.updateWorkout(workout);
         cancelExerciseSubscription(workout);
         listenForExerciseChanges(workout);
+        workoutListProvider.updateWorkout(workout);
         break;
       case DocumentChangeType.removed:
         workoutListProvider.deleteWorkout(workout);
@@ -76,7 +83,7 @@ class StreamHandler{
   void deleteExercise(Exercise exercise){
     DatabaseService db = GetIt.instance.get<DatabaseService>();
     List<Exercise> exercises = exercise.parent.exercises;
-    List<Exercise> exercisesToUpdate = moveUp(exercises, exercise.index, exercises.length);
+    List<Exercise> exercisesToUpdate = moveUp(exercises, exercise.index, exercises.length-1);
     for(Exercise exercise in exercisesToUpdate){
       db.saveExercise(exercise);
     }

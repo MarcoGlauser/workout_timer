@@ -106,8 +106,11 @@ class Workout extends ChangeNotifier{
 
   void addExercise(Exercise exercise){
     print('add');
-    _exercises.add(exercise);
-    _sort();
+    if(!_exercises.any((Exercise innerExercise) => exercise.id == innerExercise.id)){
+      _exercises.add(exercise);
+      _sort();
+    }
+
     notifyListeners();
   }
 

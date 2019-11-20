@@ -13,10 +13,10 @@ import '../exercise/ExerciseList.dart';
 class WorkoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print('redraw');
     return Login(
       child: Consumer<WorkoutListProvider>(
         builder: (context, workoutListProvider, child) {
+
           return Scaffold(
             appBar: AppBar(
               title: Text(

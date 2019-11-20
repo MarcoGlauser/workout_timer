@@ -41,6 +41,17 @@ class DatabaseService {
     return ref.snapshots().transform(snapshotToDocumentChangeTransformer);
   }
 
+  Future<QuerySnapshot> exercisesSnapshot(Workout workout){
+    var ref =_db
+        .collection('userData')
+        .document(_user.uid)
+        .collection('workouts')
+        .document(workout.id)
+        .collection('exercises')
+        .orderBy('index');
+    return ref.snapshots().first;
+  }
+
   Future<void> saveWorkout(Workout workout) {
     return _db
         .collection('userData')
