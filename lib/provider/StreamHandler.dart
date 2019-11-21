@@ -92,7 +92,6 @@ class StreamHandler{
 
   reorderExercise(Exercise exercise, int oldIndex, int newIndex){
     DatabaseService db = GetIt.instance.get<DatabaseService>();
-    print(newIndex);
     List<Exercise> exercisesToUpdate = updateIndices(exercise.parent.exercises, newIndex, oldIndex);
     for(Exercise exercise in exercisesToUpdate){
       db.saveExercise(exercise);

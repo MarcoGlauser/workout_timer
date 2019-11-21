@@ -49,7 +49,7 @@ class DatabaseService {
         .document(workout.id)
         .collection('exercises')
         .orderBy('index');
-    return ref.snapshots().first;
+    return ref.getDocuments();
   }
 
   Future<void> saveWorkout(Workout workout) {

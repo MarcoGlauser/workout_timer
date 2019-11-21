@@ -16,7 +16,10 @@ class WorkoutScreen extends StatelessWidget {
     return Login(
       child: Consumer<WorkoutListProvider>(
         builder: (context, workoutListProvider, child) {
-
+          if (workoutListProvider.activeWorkout == null) {
+            Future.delayed(Duration(milliseconds: 100),() => Navigator.of(context).popUntil((route) => route.isFirst));
+            return Scaffold();
+          }
           return Scaffold(
             appBar: AppBar(
               title: Text(
@@ -46,12 +49,18 @@ class WorkoutScreen extends StatelessWidget {
                                 onAdd: () {
                                   workoutListProvider.activeWorkout
                                       .increaseRepetitions();
-                                  GetIt.instance.get<DatabaseService>().saveWorkout(workoutListProvider.activeWorkout);
+                                  GetIt.instance
+                                      .get<DatabaseService>()
+                                      .saveWorkout(
+                                          workoutListProvider.activeWorkout);
                                 },
                                 onSubtract: () {
                                   workoutListProvider.activeWorkout
                                       .decreaseRepetitions();
-                                  GetIt.instance.get<DatabaseService>().saveWorkout(workoutListProvider.activeWorkout);
+                                  GetIt.instance
+                                      .get<DatabaseService>()
+                                      .saveWorkout(
+                                          workoutListProvider.activeWorkout);
                                 },
                               ),
                               AddSubtract(
@@ -61,12 +70,18 @@ class WorkoutScreen extends StatelessWidget {
                                 onAdd: () {
                                   workoutListProvider.activeWorkout
                                       .increaseBreak();
-                                  GetIt.instance.get<DatabaseService>().saveWorkout(workoutListProvider.activeWorkout);
+                                  GetIt.instance
+                                      .get<DatabaseService>()
+                                      .saveWorkout(
+                                          workoutListProvider.activeWorkout);
                                 },
                                 onSubtract: () {
                                   workoutListProvider.activeWorkout
                                       .decreaseBreak();
-                                  GetIt.instance.get<DatabaseService>().saveWorkout(workoutListProvider.activeWorkout);
+                                  GetIt.instance
+                                      .get<DatabaseService>()
+                                      .saveWorkout(
+                                          workoutListProvider.activeWorkout);
                                 },
                               ),
                             ],
@@ -80,7 +95,8 @@ class WorkoutScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         ExerciseList(
-                          exercises: workoutListProvider.activeWorkout.exercises,
+                          exercises:
+                              workoutListProvider.activeWorkout.exercises,
                         ),
                       ],
                     ),
