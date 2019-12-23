@@ -1,3 +1,5 @@
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -24,6 +26,11 @@ class CountdownTimer extends StatefulWidget {
 class _CountdownTimerState extends State<CountdownTimer> with TickerProviderStateMixin {
   AnimationController _controller;
   BuildContext _context;
+  AudioCache audioPlayer = AudioCache(fixedPlayer: AudioPlayer(mode: PlayerMode.LOW_LATENCY));
+  bool threeSeconds = false;
+  bool twoSeconds = false;
+  bool oneSecond = false;
+  bool noSecond = false;
 
   _CountdownTimerState(context) : super(){
     _context = context;
@@ -33,6 +40,7 @@ class _CountdownTimerState extends State<CountdownTimer> with TickerProviderStat
   @override
   void initState() {
     super.initState();
+    audioPlayer.loadAll(['beep.mp3', 'long_beep.mp3']);
     _controller = AnimationController(
       vsync: this,
       duration: widget.duration,
@@ -43,7 +51,31 @@ class _CountdownTimerState extends State<CountdownTimer> with TickerProviderStat
         Provider.of<CountdownProvider>(_context).exerciseFinished();
       }
     });
+    _controller.addListener((){
+      playSound(_controller.duration, _controller.value);
+    });
     _controller.reverse(from: 1.0);
+  }
+
+  void playSound(Duration duration, double value){
+    Duration progress = duration * value;
+    int seconds = progress.inSeconds;
+    if(!threeSeconds && seconds == 3){
+       threeSeconds = true;
+       Future.delayed(Duration(seconds: 1), () => audioPlayer.play('beep.mp3'));
+    }
+    if(!twoSeconds && seconds == 2){
+      twoSeconds = true;
+      Future.delayed(Duration(seconds: 1), () => audioPlayer.play('beep.mp3'));
+    }
+    if(!oneSecond && seconds == 1){
+      oneSecond = true;
+      Future.delayed(Duration(seconds: 1), () => audioPlayer.play('beep.mp3'));
+    }
+    if(!noSecond && seconds == 0){
+      noSecond = true;
+      Future.delayed(Duration(seconds: 1), () => audioPlayer.play('long_beep.mp3'));
+    }
   }
 
   String get timeString {

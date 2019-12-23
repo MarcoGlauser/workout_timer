@@ -30,6 +30,7 @@ dependencies:
   cloud_firestore: ^0.12.9+5
   get_it: ^3.0.1
   flare_flutter: ^1.7.3
+  audioplayers: ^0.13.5
 
 dev_dependencies:
   flutter_test:
