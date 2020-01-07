@@ -10,9 +10,10 @@ import 'package:workout_timer/provider/CountdownProvider.dart';
 class CountdownTimer extends StatefulWidget {
   final String title;
   final Duration duration;
+  final String next;
   BuildContext _context;
 
-  CountdownTimer({Key key, this.title, this.duration, context}) : super(key: key){
+  CountdownTimer({Key key, this.title, this.duration, this.next,  context}) : super(key: key){
     _context = context;
 
   }
@@ -91,8 +92,10 @@ class _CountdownTimerState extends State<CountdownTimer> with TickerProviderStat
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+
           children: <Widget>[
+            Container(),
             Container(
               child: GestureDetector(
                 onTap: () {
@@ -141,6 +144,14 @@ class _CountdownTimerState extends State<CountdownTimer> with TickerProviderStat
                 ),
               ),
             ),
+            Container(
+              child: Column(
+                children: <Widget>[
+                  Text('Next:', style: Theme.of(context).textTheme.headline),
+                  Text(widget.next, style: Theme.of(context).textTheme.display1),
+                ],
+              ),
+            )
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.

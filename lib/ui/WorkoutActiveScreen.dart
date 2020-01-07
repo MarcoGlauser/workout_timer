@@ -25,6 +25,7 @@ class _WorkoutActiveScreenState extends State<WorkoutActiveScreen>{
             key: UniqueKey(),
             title: countdownProvider.exercise.name,
             duration: countdownProvider.exercise.duration,
+            next: countdownProvider.nextExercise.name,
             context: context);
       }
     });

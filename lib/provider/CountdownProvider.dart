@@ -10,6 +10,14 @@ class CountdownProvider extends ChangeNotifier {
   CountdownProvider();
 
   Exercise get exercise => _queue.first;
+  Exercise get nextExercise {
+    if(_queue.length != 1){
+      return _queue.elementAt(1);
+    }
+    else {
+      return null;
+    }
+  }
 
   bool get isFinished => _queue.isEmpty;
 
