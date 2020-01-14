@@ -142,5 +142,4 @@ class StreamHandler{
     }
     return exercisesToUpdate;
   }
-
 }

@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_timer/models/Workout.dart';
 import 'package:workout_timer/provider/DatabaseService.dart';
-import 'package:workout_timer/ui/screens/HomeScreen.dart';
+import 'package:workout_timer/ui/screens/LoginRequired.dart';
 
 class AddWorkout extends StatefulWidget {
   @override
@@ -19,7 +19,7 @@ class _AddWorkoutState extends State<AddWorkout>{
 
   @override
   Widget build(BuildContext context) {
-    return Login(
+    return LoginRequired(
       child: Scaffold(
         appBar: AppBar(
           title: Text('Add Workout'),
