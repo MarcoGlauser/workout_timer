@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_timer/provider/CountdownProvider.dart';
+import 'package:workout_timer/provider/DatabaseService.dart';
 import 'package:workout_timer/provider/StreamHandler.dart';
 import 'package:workout_timer/provider/WorkoutListProvider.dart';
 import 'package:workout_timer/theme.dart';
@@ -11,6 +12,7 @@ import 'package:workout_timer/ui/screens/HomeScreen.dart';
 import 'package:workout_timer/ui/screens/WorkoutListScreen.dart';
 
 void main() {
+  GetIt.instance.registerLazySingleton<DatabaseService>(() => DatabaseService());
   runApp(MyApp());
 }
 
@@ -22,23 +24,21 @@ class MyApp extends StatelessWidget {
       statusBarColor: Colors.transparent, // status bar color
     ));
 
-    if (FirebaseAuth.instance.currentUser() == null) {
-      FirebaseAuth.instance.signInAnonymously();
-    }
-
-    GetIt.instance.allowReassignment = true;
+    GetIt.instance.get<DatabaseService>();
 
     WorkoutListProvider workoutListProvider = WorkoutListProvider();
-    StreamHandler streamHandler = StreamHandler(workoutListProvider);
-    GetIt.instance.registerSingleton(streamHandler);
 
     return MultiProvider(
       providers: [
+        Provider(
+            create: (_) => StreamHandler(workoutListProvider)
+        ),
         ChangeNotifierProvider.value(value: workoutListProvider),
         ChangeNotifierProxyProvider<WorkoutListProvider, CountdownProvider>(
-            initialBuilder: (_) => CountdownProvider(),
-            builder: (_, workoutListProvider, countdownProvider) =>
+            create: (_) => CountdownProvider(),
+            update: (_, workoutListProvider, countdownProvider) =>
                 countdownProvider..workout = workoutListProvider.activeWorkout),
+
         StreamProvider<FirebaseUser>.value(
             value: FirebaseAuth.instance.onAuthStateChanged),
       ],

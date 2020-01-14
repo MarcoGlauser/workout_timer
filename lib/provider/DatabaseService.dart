@@ -9,6 +9,7 @@ class DatabaseService {
   final Firestore _db = Firestore.instance;
   FirebaseUser _user;
 
+
   StreamTransformer<QuerySnapshot, DocumentChange> snapshotToDocumentChangeTransformer = StreamTransformer<QuerySnapshot, DocumentChange>.fromHandlers(
     handleData: (QuerySnapshot snapshot, EventSink sink) {
       for (DocumentChange documentChange in snapshot.documentChanges) {
@@ -17,8 +18,11 @@ class DatabaseService {
     },
   );
 
-  DatabaseService(this._user) {
+  DatabaseService() {
     _db.settings(persistenceEnabled: true);
+    FirebaseAuth.instance.onAuthStateChanged.listen(
+            (FirebaseUser user) => this._user = user
+    );
   }
 
   Stream<DocumentChange> streamWorkoutChanges() {

@@ -1,9 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:workout_timer/provider/DatabaseService.dart';
-import 'package:workout_timer/provider/StreamHandler.dart';
 import 'package:workout_timer/ui/screens/LoginScreen.dart';
 
 class Login extends StatelessWidget {
@@ -20,9 +17,6 @@ class Login extends StatelessWidget {
           FirebaseAuth.instance.signInAnonymously();
           return LoginScreen();
         } else {
-          final db = DatabaseService(user);
-          GetIt.instance.registerSingleton<DatabaseService>(db);
-          GetIt.instance.get<StreamHandler>().listenForWorkoutChanges();
           return child;
         }
       },
