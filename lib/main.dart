@@ -8,7 +8,7 @@ import 'package:workout_timer/provider/DatabaseService.dart';
 import 'package:workout_timer/provider/StreamHandler.dart';
 import 'package:workout_timer/provider/WorkoutListProvider.dart';
 import 'package:workout_timer/theme.dart';
-import 'package:workout_timer/ui/screens/HomeScreen.dart';
+import 'package:workout_timer/ui/screens/LoginRequired.dart';
 import 'package:workout_timer/ui/screens/WorkoutListScreen.dart';
 
 void main() {
@@ -27,18 +27,16 @@ class MyApp extends StatelessWidget {
     GetIt.instance.get<DatabaseService>();
 
     WorkoutListProvider workoutListProvider = WorkoutListProvider();
+    StreamHandler streamHandler = StreamHandler(workoutListProvider);
 
     return MultiProvider(
       providers: [
-        Provider(
-            create: (_) => StreamHandler(workoutListProvider)
-        ),
+        Provider.value(value: streamHandler),
         ChangeNotifierProvider.value(value: workoutListProvider),
         ChangeNotifierProxyProvider<WorkoutListProvider, CountdownProvider>(
             create: (_) => CountdownProvider(),
             update: (_, workoutListProvider, countdownProvider) =>
                 countdownProvider..workout = workoutListProvider.activeWorkout),
-
         StreamProvider<FirebaseUser>.value(
             value: FirebaseAuth.instance.onAuthStateChanged),
       ],
@@ -47,7 +45,7 @@ class MyApp extends StatelessWidget {
         theme: defaultTheme,
         darkTheme: darkTheme,
         //home: CountdownTimer(title: 'Pushups', duration: Duration(seconds: 30),),
-        home: Login(
+        home: LoginRequired(
           child: WorkoutListScreen(),
         ),
       ),

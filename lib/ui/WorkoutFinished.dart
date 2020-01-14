@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:workout_timer/ui/Fireworks.dart';
-import 'package:workout_timer/ui/screens/HomeScreen.dart';
+import 'package:workout_timer/ui/screens/LoginRequired.dart';
 
 class WorkoutFinished extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Login(
+    return LoginRequired(
       child: Scaffold(
         body: SafeArea(
           child: Container(

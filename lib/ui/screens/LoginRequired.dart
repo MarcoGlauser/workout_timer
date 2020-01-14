@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_timer/ui/screens/LoginScreen.dart';
 
-class Login extends StatelessWidget {
+class LoginRequired extends StatelessWidget {
 
   final Widget child;
 
-  const Login({Key key, this.child}) : super(key: key);
+  const LoginRequired({Key key, this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

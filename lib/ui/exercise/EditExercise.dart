@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:workout_timer/models/Exercise.dart';
 import 'package:workout_timer/provider/DatabaseService.dart';
-import 'package:workout_timer/ui/screens/HomeScreen.dart';
+import 'package:workout_timer/ui/screens/LoginRequired.dart';
 
 
 class EditExercise extends StatefulWidget {
@@ -24,7 +24,7 @@ class _EditExerciseState extends State<EditExercise>{
 
   @override
   Widget build(BuildContext context) {
-    return Login(
+    return LoginRequired(
       child: Scaffold(
         appBar: AppBar(
           title: Text('Edit Exercise'),

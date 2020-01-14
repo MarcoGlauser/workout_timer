@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_timer/provider/DatabaseService.dart';
 import 'package:workout_timer/provider/WorkoutListProvider.dart';
-import 'package:workout_timer/ui/screens/HomeScreen.dart';
+import 'package:workout_timer/ui/screens/LoginRequired.dart';
 import 'package:workout_timer/ui/workout/WorkoutOptions.dart';
 
 import '../AddSubtract.dart';
@@ -13,7 +13,7 @@ import '../exercise/ExerciseList.dart';
 class WorkoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Login(
+    return LoginRequired(
       child: Consumer<WorkoutListProvider>(
         builder: (context, workoutListProvider, child) {
           if (workoutListProvider.activeWorkout == null) {
