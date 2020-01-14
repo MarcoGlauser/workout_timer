@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:workout_timer/models/Exercise.dart';
 import 'package:workout_timer/models/Workout.dart';
@@ -9,16 +10,31 @@ import 'package:workout_timer/provider/WorkoutListProvider.dart';
 
 class StreamHandler{
   final WorkoutListProvider workoutListProvider;
+  StreamSubscription workoutSubscription;
+  DatabaseService db;
   Map<String, StreamSubscription> streamSubscriptions = {};
   bool isListening = false;
-  StreamHandler(this.workoutListProvider);
+  StreamHandler(this.workoutListProvider){
+    db = GetIt.instance.get<DatabaseService>();
+    FirebaseAuth.instance.onAuthStateChanged.listen((FirebaseUser user){
+      cancelWorkoutSubscription();
+      listenForWorkoutChanges();
+    });
+  }
+
 
   listenForWorkoutChanges(){
     if(!isListening) {
-      DatabaseService db = GetIt.instance.get<DatabaseService>();
       Stream<DocumentChange> workoutChanges = db.streamWorkoutChanges();
-      workoutChanges.listen(handleWorkoutChange);
+      workoutSubscription = workoutChanges.listen(handleWorkoutChange);
       isListening = true;
+    }
+  }
+
+  cancelWorkoutSubscription(){
+    if(isListening){
+      workoutSubscription.cancel();
+      isListening = false;
     }
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:workout_timer/models/Exercise.dart';
 import 'package:workout_timer/provider/StreamHandler.dart';
 
@@ -31,7 +32,7 @@ class ExerciseList extends StatelessWidget {
               newIndex -= 1;
             }
             Exercise exercise = exercises[oldIndex];
-            GetIt.instance.get<StreamHandler>().reorderExercise(exercise, oldIndex, newIndex);
+            Provider.of<StreamHandler>(context).reorderExercise(exercise, oldIndex, newIndex);
           },
         ),
       );

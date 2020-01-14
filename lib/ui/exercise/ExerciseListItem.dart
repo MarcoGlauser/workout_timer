@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:workout_timer/models/Exercise.dart';
 import 'package:workout_timer/provider/StreamHandler.dart';
 import 'package:workout_timer/ui/exercise/EditExercise.dart';
@@ -40,7 +41,7 @@ class ExerciseListItem extends StatelessWidget {
               color: Theme.of(context).textTheme.body1.color,
             ),
             onPressed: () {
-              GetIt.instance.get<StreamHandler>().deleteExercise(exercise);
+              Provider.of<StreamHandler>(context).deleteExercise(exercise);
             },
           ),
         ],
