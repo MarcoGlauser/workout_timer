@@ -17,7 +17,6 @@ class _WorkoutActiveScreenState extends State<WorkoutActiveScreen>{
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Wakelock.enable();
   }
