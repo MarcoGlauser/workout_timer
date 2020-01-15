@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wakelock/wakelock.dart';
+import 'package:workout_timer/models/Workout.dart';
 import 'package:workout_timer/provider/CountdownProvider.dart';
 
 import 'CountdownTimer.dart';
 import 'WorkoutFinished.dart';
+
+class WorkoutActiveScreenArguments{
+  final Workout workout;
+
+  WorkoutActiveScreenArguments(this.workout);
+}
 
 class WorkoutActiveScreen extends StatefulWidget {
   static const route = '/workout/start';
@@ -23,6 +30,10 @@ class _WorkoutActiveScreenState extends State<WorkoutActiveScreen>{
 
   @override
   Widget build(BuildContext context) {
+    final WorkoutActiveScreenArguments screenArguments = ModalRoute.of(context).settings.arguments;
+    final Workout workout = screenArguments.workout;
+    Provider.of<CountdownProvider>(context, listen: false).workout = workout;
+
     return Consumer<CountdownProvider>(
         builder: (context, countdownProvider, child) {
       if (countdownProvider.isFinished) {
@@ -36,7 +47,7 @@ class _WorkoutActiveScreenState extends State<WorkoutActiveScreen>{
             title: countdownProvider.exercise.name,
             duration: countdownProvider.exercise.duration,
             next: countdownProvider.nextExercise.name,
-            context: context);
+        );
       }
     });
   }

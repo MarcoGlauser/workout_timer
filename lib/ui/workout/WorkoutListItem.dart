@@ -61,7 +61,8 @@ class WorkoutListItem extends StatelessWidget {
                       Provider.of<WorkoutListProvider>(context, listen: false).activeWorkout = workout;
                       Navigator.pushNamed(
                         context,
-                        WorkoutActiveScreen.route
+                        WorkoutActiveScreen.route,
+                        arguments: WorkoutActiveScreenArguments(workout)
                       );
                     },
                   ),

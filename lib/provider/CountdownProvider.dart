@@ -7,8 +7,6 @@ import 'package:workout_timer/models/Workout.dart';
 class CountdownProvider extends ChangeNotifier {
   Queue<Exercise> _queue = Queue();
 
-  CountdownProvider();
-
   Exercise get exercise => _queue.first;
   Exercise get nextExercise {
     if(_queue.length != 1){

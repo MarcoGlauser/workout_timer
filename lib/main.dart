@@ -9,15 +9,10 @@ import 'package:workout_timer/provider/StreamHandler.dart';
 import 'package:workout_timer/provider/WorkoutListProvider.dart';
 import 'package:workout_timer/router.dart';
 import 'package:workout_timer/theme.dart';
-import 'package:workout_timer/ui/WorkoutActiveScreen.dart';
-import 'package:workout_timer/ui/exercise/AddExercise.dart';
-import 'package:workout_timer/ui/exercise/EditExercise.dart';
-import 'package:workout_timer/ui/screens/WorkoutListScreen.dart';
-import 'package:workout_timer/ui/screens/WorkoutScreen.dart';
-import 'package:workout_timer/ui/workout/AddWorkout.dart';
 
 void main() {
-  GetIt.instance.registerLazySingleton<DatabaseService>(() => DatabaseService());
+  GetIt.instance
+      .registerLazySingleton<DatabaseService>(() => DatabaseService());
   runApp(WorkoutTimer());
 }
 
@@ -38,10 +33,7 @@ class WorkoutTimer extends StatelessWidget {
       providers: [
         Provider.value(value: streamHandler),
         ChangeNotifierProvider.value(value: workoutListProvider),
-        ChangeNotifierProxyProvider<WorkoutListProvider, CountdownProvider>(
-            create: (_) => CountdownProvider(),
-            update: (_, workoutListProvider, countdownProvider) =>
-                countdownProvider..workout = workoutListProvider.activeWorkout),
+        ChangeNotifierProvider(create: (_) => CountdownProvider()),
         StreamProvider<FirebaseUser>.value(
             value: FirebaseAuth.instance.onAuthStateChanged),
       ],

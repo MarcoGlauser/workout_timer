@@ -1,5 +1,3 @@
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -12,26 +10,17 @@ class CountdownTimer extends StatefulWidget {
   final String title;
   final Duration duration;
   final String next;
-  BuildContext _context;
 
-  CountdownTimer({Key key, this.title, this.duration, this.next,  context}) : super(key: key){
-    _context = context;
-
-  }
+  CountdownTimer({Key key, this.title, this.duration, this.next,}) : super(key: key);
 
   @override
   _CountdownTimerState createState() {
-    return _CountdownTimerState(_context);
+    return _CountdownTimerState();
   }
 }
 
 class _CountdownTimerState extends State<CountdownTimer> with TickerProviderStateMixin {
   AnimationController _controller;
-  BuildContext _context;
-
-  _CountdownTimerState(context) : super(){
-    _context = context;
-  }
   Selector selector;
 
   @override
@@ -50,7 +39,7 @@ class _CountdownTimerState extends State<CountdownTimer> with TickerProviderStat
     );
     _controller.addStatusListener((AnimationStatus status) {
       if(status == AnimationStatus.dismissed) {
-        Provider.of<CountdownProvider>(_context).exerciseFinished();
+        Provider.of<CountdownProvider>(context, listen: false).exerciseFinished();
       }
     });
     _controller.addListener((){
