@@ -42,7 +42,8 @@ class WorkoutListItem extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ButtonTheme.bar(
+            child: ButtonBarTheme(
+              data: ButtonBarThemeData(alignment: MainAxisAlignment.center),
               child: ButtonBar(
                 alignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
@@ -57,12 +58,10 @@ class WorkoutListItem extends StatelessWidget {
                       ],
                     ),
                     onPressed: () {
-                      Provider.of<WorkoutListProvider>(context).activeWorkout = workout;
-                      Navigator.push(
+                      Provider.of<WorkoutListProvider>(context, listen: false).activeWorkout = workout;
+                      Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => WorkoutActiveScreen(),
-                        ),
+                        WorkoutActiveScreen.route
                       );
                     },
                   ),
@@ -77,12 +76,10 @@ class WorkoutListItem extends StatelessWidget {
                       ],
                     ),
                     onPressed: () {
-                      Provider.of<WorkoutListProvider>(context).activeWorkout = workout;
-                      Navigator.push(
+                      Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => WorkoutScreen(),
-                        ),
+                        WorkoutScreen.route,
+                        arguments: WorkoutScreenArguments(workout)
                       );
                     },
                   ),

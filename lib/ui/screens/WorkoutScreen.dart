@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:workout_timer/models/Workout.dart';
 import 'package:workout_timer/provider/DatabaseService.dart';
 import 'package:workout_timer/provider/WorkoutListProvider.dart';
 import 'package:workout_timer/ui/screens/LoginRequired.dart';
@@ -10,23 +11,30 @@ import '../AddSubtract.dart';
 import '../exercise/AddExercise.dart';
 import '../exercise/ExerciseList.dart';
 
+class WorkoutScreenArguments {
+  final Workout workout;
+
+  WorkoutScreenArguments(this.workout);
+}
+
 class WorkoutScreen extends StatelessWidget {
+  static const route = '/workout/edit';
+
   @override
   Widget build(BuildContext context) {
+    final WorkoutScreenArguments screenArguments = ModalRoute.of(context).settings.arguments;
+    final Workout workout = screenArguments.workout;
+
     return LoginRequired(
       child: Consumer<WorkoutListProvider>(
         builder: (context, workoutListProvider, child) {
-          if (workoutListProvider.activeWorkout == null) {
-            Future.delayed(Duration(milliseconds: 100),() => Navigator.of(context).popUntil((route) => route.isFirst));
-            return Scaffold();
-          }
           return Scaffold(
             appBar: AppBar(
               title: Text(
-                workoutListProvider.activeWorkout.name,
+                workout.name,
               ),
               actions: <Widget>[
-                WorkoutOptions(workout: workoutListProvider.activeWorkout),
+                WorkoutOptions(workout: workout),
               ],
             ),
             body: SafeArea(
@@ -44,44 +52,36 @@ class WorkoutScreen extends StatelessWidget {
                             children: <Widget>[
                               AddSubtract(
                                 child: Text(
-                                    "${workoutListProvider.activeWorkout.repetitions} Repetition",
+                                    "${workout.repetitions} Repetition",
                                     style: Theme.of(context).textTheme.title),
                                 onAdd: () {
-                                  workoutListProvider.activeWorkout
-                                      .increaseRepetitions();
+                                  workout.increaseRepetitions();
                                   GetIt.instance
                                       .get<DatabaseService>()
-                                      .saveWorkout(
-                                          workoutListProvider.activeWorkout);
+                                      .saveWorkout(workout);
                                 },
                                 onSubtract: () {
-                                  workoutListProvider.activeWorkout
-                                      .decreaseRepetitions();
+                                  workout.decreaseRepetitions();
                                   GetIt.instance
                                       .get<DatabaseService>()
-                                      .saveWorkout(
-                                          workoutListProvider.activeWorkout);
+                                      .saveWorkout(workout);
                                 },
                               ),
                               AddSubtract(
                                 child: Text(
-                                    "${workoutListProvider.activeWorkout.breakDuration.inMinutes.toString().padLeft(2, '0')}:${(workoutListProvider.activeWorkout.breakDuration.inSeconds % 60).toString().padLeft(2, '0')}  Break",
+                                    "${workout.breakDuration.inMinutes.toString().padLeft(2, '0')}:${(workout.breakDuration.inSeconds % 60).toString().padLeft(2, '0')}  Break",
                                     style: Theme.of(context).textTheme.title),
                                 onAdd: () {
-                                  workoutListProvider.activeWorkout
-                                      .increaseBreak();
+                                  workout.increaseBreak();
                                   GetIt.instance
                                       .get<DatabaseService>()
-                                      .saveWorkout(
-                                          workoutListProvider.activeWorkout);
+                                      .saveWorkout(workout);
                                 },
                                 onSubtract: () {
-                                  workoutListProvider.activeWorkout
-                                      .decreaseBreak();
+                                  workout.decreaseBreak();
                                   GetIt.instance
                                       .get<DatabaseService>()
-                                      .saveWorkout(
-                                          workoutListProvider.activeWorkout);
+                                      .saveWorkout(workout);
                                 },
                               ),
                             ],
@@ -96,7 +96,7 @@ class WorkoutScreen extends StatelessWidget {
                       children: <Widget>[
                         ExerciseList(
                           exercises:
-                              workoutListProvider.activeWorkout.exercises,
+                              workout.exercises,
                         ),
                       ],
                     ),
@@ -107,12 +107,10 @@ class WorkoutScreen extends StatelessWidget {
             floatingActionButton: FloatingActionButton(
               child: Icon(Icons.add),
               onPressed: () {
-                Navigator.push(
+                Navigator.pushNamed(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        AddExercise(workout: workoutListProvider.activeWorkout),
-                  ),
+                  AddExercise.route,
+                  arguments: AddExerciseArguments(workout)
                 );
               },
             ),

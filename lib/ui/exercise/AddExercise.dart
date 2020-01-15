@@ -7,28 +7,31 @@ import 'package:workout_timer/provider/DatabaseService.dart';
 import 'package:workout_timer/ui/screens/LoginRequired.dart';
 
 
+class AddExerciseArguments{
+  final Workout workout;
+
+  AddExerciseArguments(this.workout);
+}
+
 class AddExercise extends StatefulWidget {
+  static const String route = '/workout/exercise/add';
   final Workout workout;
 
   const AddExercise({Key key, this.workout}) : super(key: key);
 
-
   @override
-  State<StatefulWidget> createState() => _AddExerciseState(workout);
+  State<StatefulWidget> createState() => _AddExerciseState();
 }
 
 
 class _AddExerciseState extends State<AddExercise>{
-  final Workout workout;
   final _formKey = GlobalKey<FormState>();
   Exercise _exercise;
-
-  _AddExerciseState(this.workout);
 
   @override
   void initState() {
     super.initState();
-    _exercise = Exercise(workout, index: workout.exercises.length);
+    _exercise = Exercise(widget.workout, index: widget.workout.exercises.length);
   }
 
   @override

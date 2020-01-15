@@ -7,16 +7,21 @@ import 'package:workout_timer/provider/CountdownProvider.dart';
 import 'package:workout_timer/provider/DatabaseService.dart';
 import 'package:workout_timer/provider/StreamHandler.dart';
 import 'package:workout_timer/provider/WorkoutListProvider.dart';
+import 'package:workout_timer/router.dart';
 import 'package:workout_timer/theme.dart';
-import 'package:workout_timer/ui/screens/LoginRequired.dart';
+import 'package:workout_timer/ui/WorkoutActiveScreen.dart';
+import 'package:workout_timer/ui/exercise/AddExercise.dart';
+import 'package:workout_timer/ui/exercise/EditExercise.dart';
 import 'package:workout_timer/ui/screens/WorkoutListScreen.dart';
+import 'package:workout_timer/ui/screens/WorkoutScreen.dart';
+import 'package:workout_timer/ui/workout/AddWorkout.dart';
 
 void main() {
   GetIt.instance.registerLazySingleton<DatabaseService>(() => DatabaseService());
-  runApp(MyApp());
+  runApp(WorkoutTimer());
 }
 
-class MyApp extends StatelessWidget {
+class WorkoutTimer extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -41,13 +46,13 @@ class MyApp extends StatelessWidget {
             value: FirebaseAuth.instance.onAuthStateChanged),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Workout Timer',
         theme: defaultTheme,
         darkTheme: darkTheme,
         //home: CountdownTimer(title: 'Pushups', duration: Duration(seconds: 30),),
-        home: LoginRequired(
-          child: WorkoutListScreen(),
-        ),
+
+        initialRoute: '/',
+        onGenerateRoute: Router.generateRoute,
       ),
     );
   }

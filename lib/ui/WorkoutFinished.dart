@@ -3,6 +3,8 @@ import 'package:workout_timer/ui/Fireworks.dart';
 import 'package:workout_timer/ui/screens/LoginRequired.dart';
 
 class WorkoutFinished extends StatelessWidget {
+  static const route = '/workout/finished';
+
   @override
   Widget build(BuildContext context) {
     return LoginRequired(
