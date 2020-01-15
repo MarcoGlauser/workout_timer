@@ -5,22 +5,27 @@ import 'package:workout_timer/models/Exercise.dart';
 import 'package:workout_timer/provider/DatabaseService.dart';
 import 'package:workout_timer/ui/screens/LoginRequired.dart';
 
+class EditExerciseArguments{
+  final Exercise exercise;
+
+  EditExerciseArguments(this.exercise);
+}
 
 class EditExercise extends StatefulWidget {
+  static const route = '/workout/exercise/edit';
   final Exercise exercise;
 
   const EditExercise({Key key, this.exercise}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _EditExerciseState(exercise);
+  State<StatefulWidget> createState() => _EditExerciseState();
 }
 
 
 class _EditExerciseState extends State<EditExercise>{
   final _formKey = GlobalKey<FormState>();
-  final Exercise exercise;
 
-  _EditExerciseState(this.exercise);
+  _EditExerciseState();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +46,7 @@ class _EditExerciseState extends State<EditExercise>{
                   padding: const EdgeInsets.symmetric(vertical: 12.0),
                   child: TextFormField(
                     autofocus: true,
-                    initialValue: exercise.name,
+                    initialValue: widget.exercise.name,
                     // The validator receives the text that the user has entered.
                     validator: (value) {
                       if (value.isEmpty) {
@@ -53,14 +58,14 @@ class _EditExerciseState extends State<EditExercise>{
                         labelText: 'Exercise Name'
                     ),
                     onSaved: (val) {
-                      setState(() => exercise.name = val);
+                      setState(() => widget.exercise.name = val);
                     },
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12.0),
                   child: TextFormField(
-                    initialValue: exercise.duration.inSeconds.toString(),
+                    initialValue: widget.exercise.duration.inSeconds.toString(),
                     // The validator receives the text that the user has entered.
                     validator: (value) {
                       if (value.isEmpty) {
@@ -73,7 +78,7 @@ class _EditExerciseState extends State<EditExercise>{
                     decoration: InputDecoration(
                         labelText: 'Duration in seconds'
                     ),
-                    onSaved: (val) => setState(() => exercise.duration = Duration(seconds: int.parse(val))),
+                    onSaved: (val) => setState(() => widget.exercise.duration = Duration(seconds: int.parse(val))),
                   ),
                 ),
                 Padding(
@@ -85,7 +90,7 @@ class _EditExerciseState extends State<EditExercise>{
                         form.save();
                         //workout.addExercise(_exercise);
                         DatabaseService db = GetIt.instance.get<DatabaseService>();
-                        db.saveExercise(exercise);
+                        db.saveExercise(widget.exercise);
                         Navigator.pop(context);
                       }
                     },

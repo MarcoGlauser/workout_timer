@@ -6,13 +6,15 @@ import 'package:workout_timer/models/Workout.dart';
 import 'package:workout_timer/provider/DatabaseService.dart';
 import 'package:workout_timer/ui/screens/LoginRequired.dart';
 
-class AddWorkout extends StatefulWidget {
+class AddWorkoutScreen extends StatefulWidget {
+  static const route = '/workout/add';
+
   @override
-  State<StatefulWidget> createState() => _AddWorkoutState();
+  State<StatefulWidget> createState() => _AddWorkoutScreenState();
 }
 
 
-class _AddWorkoutState extends State<AddWorkout>{
+class _AddWorkoutScreenState extends State<AddWorkoutScreen>{
 
   final _formKey = GlobalKey<FormState>();
   final _workout = Workout();
@@ -56,8 +58,8 @@ class _AddWorkoutState extends State<AddWorkout>{
                       final form = _formKey.currentState;
                       if (form.validate()) {
                         form.save();
-                        DatabaseService _db = GetIt.instance.get<DatabaseService>();
-                        _db.saveWorkout(_workout);
+                        DatabaseService db = GetIt.instance.get<DatabaseService>();
+                        db.saveWorkout(_workout);
                         Navigator.pop(context);
                       }
                     },

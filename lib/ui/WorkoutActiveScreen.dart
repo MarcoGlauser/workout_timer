@@ -7,20 +7,31 @@ import 'CountdownTimer.dart';
 import 'WorkoutFinished.dart';
 
 class WorkoutActiveScreen extends StatefulWidget {
+  static const route = '/workout/start';
+
   @override
   _WorkoutActiveScreenState createState() => _WorkoutActiveScreenState();
 }
 
 class _WorkoutActiveScreenState extends State<WorkoutActiveScreen>{
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Wakelock.enable();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<CountdownProvider>(
         builder: (context, countdownProvider, child) {
       if (countdownProvider.isFinished) {
-        Wakelock.disable();
+        setState(() {
+          Wakelock.disable();
+        });
         return WorkoutFinished();
       } else {
-        Wakelock.enable();
         return CountdownTimer(
             key: UniqueKey(),
             title: countdownProvider.exercise.name,
