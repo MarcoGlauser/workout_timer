@@ -17,7 +17,6 @@ class ExerciseListItem extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(exercise.index.toString()),
           IconButton(
             icon: Icon(
               Icons.edit,

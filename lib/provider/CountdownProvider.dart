@@ -15,7 +15,7 @@ class CountdownProvider extends ChangeNotifier {
       return _queue.elementAt(1);
     }
     else {
-      return null;
+      return Exercise(null, name: 'End');
     }
   }
 
@@ -29,6 +29,9 @@ class CountdownProvider extends ChangeNotifier {
   }
 
   _addExercisesFromWorkout(Workout workout){
+    if(workout.exercises.length > 0){
+      _addExercise(Exercise(null, name: 'Start', duration: Duration(seconds: 5)));
+    }
     for(int i in Iterable.generate(workout.repetitions)) {
       for (Exercise exercise in workout.exercises) {
         if (exercise == workout.exercises.last) {
