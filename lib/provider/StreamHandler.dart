@@ -66,7 +66,7 @@ class StreamHandler{
     await addExercisesSnapshotToWorkout(workout);
     switch(documentChange.type) {
       case DocumentChangeType.added:
-        workoutListProvider.addWorkout(workout,index: documentChange.newIndex);
+        workoutListProvider.addWorkout(workout);
         listenForExerciseChanges(workout);
         break;
       case DocumentChangeType.modified:
