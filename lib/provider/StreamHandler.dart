@@ -99,9 +99,12 @@ class StreamHandler{
   void deleteExercise(Exercise exercise){
     DatabaseService db = GetIt.instance.get<DatabaseService>();
     List<Exercise> exercises = exercise.parent.exercises;
-    List<Exercise> exercisesToUpdate = moveUp(exercises, exercise.index, exercises.length-1);
-    for(Exercise exercise in exercisesToUpdate){
-      db.saveExercise(exercise);
+    if(exercises.length > 1) {
+      List<Exercise> exercisesToUpdate = moveUp(
+          exercises, exercise.index, exercises.length - 1);
+      for (Exercise exercise in exercisesToUpdate) {
+        db.saveExercise(exercise);
+      }
     }
     db.deleteExercise(exercise);
   }
@@ -117,12 +120,13 @@ class StreamHandler{
   }
 
   updateIndices(List<Exercise> exercises, int newIndex,int oldIndex){
-    if(newIndex > oldIndex){
-      return moveUp(exercises, oldIndex+1, newIndex);
+    if (newIndex > oldIndex) {
+      return moveUp(exercises, oldIndex + 1, newIndex);
     }
-    else{
-      return moveDown(exercises, newIndex, oldIndex-1);
+    else {
+      return moveDown(exercises, newIndex, oldIndex - 1);
     }
+
   }
 
   moveDown(List<Exercise> exercises, int start, int end){

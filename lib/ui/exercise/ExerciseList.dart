@@ -32,7 +32,7 @@ class ExerciseList extends StatelessWidget {
               newIndex -= 1;
             }
             Exercise exercise = exercises[oldIndex];
-            Provider.of<StreamHandler>(context).reorderExercise(exercise, oldIndex, newIndex);
+            Provider.of<StreamHandler>(context, listen: false).reorderExercise(exercise, oldIndex, newIndex);
           },
         ),
       );

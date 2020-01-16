@@ -36,7 +36,7 @@ class ExerciseListItem extends StatelessWidget {
               color: Theme.of(context).textTheme.body1.color,
             ),
             onPressed: () {
-              Provider.of<StreamHandler>(context).deleteExercise(exercise);
+              Provider.of<StreamHandler>(context, listen: false).deleteExercise(exercise);
             },
           ),
         ],
