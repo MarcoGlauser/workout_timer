@@ -31,8 +31,7 @@ class _WorkoutActiveScreenState extends State<WorkoutActiveScreen>{
   @override
   Widget build(BuildContext context) {
     final WorkoutActiveScreenArguments screenArguments = ModalRoute.of(context).settings.arguments;
-    final Workout workout = screenArguments.workout;
-    Provider.of<CountdownProvider>(context, listen: false).workout = workout;
+    Provider.of<CountdownProvider>(context, listen: false).workout = screenArguments.workout;
 
     return Consumer<CountdownProvider>(
         builder: (context, countdownProvider, child) {
