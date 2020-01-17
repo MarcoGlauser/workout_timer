@@ -12,10 +12,12 @@ class AudioController{
   AudioController(this.totalTimeInSeconds);
 
   void addSignal(int secondsBeforeEnd, String soundFile){
-    final double progressToPlay = secondsBeforeEnd/totalTimeInSeconds;
-    audioPlayer.load(soundFile);
-    _queue.add(progressToPlay);
-    audioFiles[progressToPlay] = soundFile;
+    if(secondsBeforeEnd <= totalTimeInSeconds) {
+      final double progressToPlay = secondsBeforeEnd / totalTimeInSeconds;
+      audioPlayer.load(soundFile);
+      _queue.add(progressToPlay);
+      audioFiles[progressToPlay] = soundFile;
+    }
   }
 
   void checkSoundToPlay(double progress) async{
