@@ -29,12 +29,10 @@ class WorkoutListProvider extends ChangeNotifier{
   }
 
   void updateWorkout(Workout workout){
-    int updateIndex = _workouts.indexWhere((Workout innerWorkout) => workout.id == innerWorkout.id);
-    _workouts.removeAt(updateIndex);
-    addWorkout(workout, index: updateIndex);
-    if(_activeWorkout!= null && _activeWorkout.id == workout.id){
-      _activeWorkout = workout;
-    }
+    Workout original_workout = _workouts.firstWhere((Workout innerWorkout) => workout.id == innerWorkout.id);
+    original_workout.name = workout.name;
+    original_workout.repetitions = workout.repetitions;
+    original_workout.breakDuration = workout.breakDuration;
     notifyListeners();
   }
 

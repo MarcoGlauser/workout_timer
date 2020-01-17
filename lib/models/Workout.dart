@@ -96,7 +96,7 @@ class Workout extends ChangeNotifier{
   }
 
   void updateExercise(Exercise exercise){
-    print('update');
+    print('update exercise');
     int updateIndex = _exercises.indexWhere((Exercise innerExercise) => exercise.id == innerExercise.id);
     _exercises.removeAt(updateIndex);
     _exercises.insert(updateIndex,exercise);
@@ -105,7 +105,7 @@ class Workout extends ChangeNotifier{
   }
 
   void addExercise(Exercise exercise){
-    print('add');
+    print('add exercise');
     if(!_exercises.any((Exercise innerExercise) => exercise.id == innerExercise.id)){
       _exercises.add(exercise);
       _sort();
@@ -115,7 +115,7 @@ class Workout extends ChangeNotifier{
   }
 
   void deleteExercise(Exercise exercise){
-    print('delete');
+    print('delete exercise');
     int deleteIndex = _exercises.indexWhere((Exercise innerExercise) => exercise.id == innerExercise.id);
     _exercises.removeAt(deleteIndex);
     _sort();

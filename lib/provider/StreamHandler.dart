@@ -70,8 +70,6 @@ class StreamHandler{
         listenForExerciseChanges(workout);
         break;
       case DocumentChangeType.modified:
-        cancelExerciseSubscription(workout);
-        listenForExerciseChanges(workout);
         workoutListProvider.updateWorkout(workout);
         break;
       case DocumentChangeType.removed:

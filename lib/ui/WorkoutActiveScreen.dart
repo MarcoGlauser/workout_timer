@@ -36,9 +36,7 @@ class _WorkoutActiveScreenState extends State<WorkoutActiveScreen>{
     return Consumer<CountdownProvider>(
         builder: (context, countdownProvider, child) {
       if (countdownProvider.isFinished) {
-        setState(() {
-          Wakelock.disable();
-        });
+        Wakelock.disable();
         return WorkoutFinished();
       } else {
         return CountdownTimer(
