@@ -29,7 +29,7 @@ class WorkoutList extends StatelessWidget {
         child: ReorderableListView(
           children: getChildrenTasks(),
           onReorder: (oldIndex, newIndex){
-            Provider.of<WorkoutListProvider>(context).reorderWorkout(oldIndex, newIndex);
+            Provider.of<WorkoutListProvider>(context, listen: false).reorderWorkout(oldIndex, newIndex);
           },
         ),
       );
