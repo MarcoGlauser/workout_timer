@@ -63,9 +63,9 @@ class StreamHandler{
 
   void handleWorkoutChange(DocumentChange documentChange) async{
     Workout workout = Workout.fromFirestore(documentChange.document);
-    await addExercisesSnapshotToWorkout(workout);
     switch(documentChange.type) {
       case DocumentChangeType.added:
+        await addExercisesSnapshotToWorkout(workout);
         workoutListProvider.addWorkout(workout);
         listenForExerciseChanges(workout);
         break;
