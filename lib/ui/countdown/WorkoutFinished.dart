@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:workout_timer/ui/Fireworks.dart';
-import 'package:workout_timer/ui/screens/LoginRequired.dart';
+import 'package:workout_timer/ui/countdown/Fireworks.dart';
+import 'package:workout_timer/ui/login/LoginRequired.dart';
 
 class WorkoutFinished extends StatelessWidget {
   static const route = '/workout/finished';

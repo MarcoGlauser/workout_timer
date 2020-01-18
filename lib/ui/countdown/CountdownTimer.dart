@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:provider/provider.dart';
-import 'package:workout_timer/provider/CountdownProvider.dart';
-import 'package:workout_timer/ui/AudioController.dart';
+import 'package:workout_timer/services/CountdownProvider.dart';
+import 'package:workout_timer/core/AudioController.dart';
 
 class CountdownTimer extends StatefulWidget {
   final String title;

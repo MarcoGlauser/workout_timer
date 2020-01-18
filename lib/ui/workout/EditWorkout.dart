@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_timer/models/Workout.dart';
-import 'package:workout_timer/provider/DatabaseService.dart';
-import 'package:workout_timer/provider/WorkoutListProvider.dart';
-import 'package:workout_timer/ui/screens/LoginRequired.dart';
+import 'package:workout_timer/services/DatabaseService.dart';
+import 'package:workout_timer/services/WorkoutListProvider.dart';
+import 'package:workout_timer/ui/login/LoginRequired.dart';
 import 'package:workout_timer/ui/workout/WorkoutOptions.dart';
 
-import '../AddSubtract.dart';
+import '../../core/AddSubtract.dart';
 import '../exercise/AddExercise.dart';
 import '../exercise/ExerciseList.dart';
 

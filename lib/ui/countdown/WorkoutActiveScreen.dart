@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:workout_timer/models/Workout.dart';
-import 'package:workout_timer/provider/CountdownProvider.dart';
+import 'package:workout_timer/services/CountdownProvider.dart';
 
 import 'CountdownTimer.dart';
 import 'WorkoutFinished.dart';

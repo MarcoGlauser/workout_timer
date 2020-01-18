@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_timer/models/Workout.dart';
-import 'package:workout_timer/provider/WorkoutListProvider.dart';
-import 'package:workout_timer/ui/screens/WorkoutScreen.dart';
+import 'package:workout_timer/services/WorkoutListProvider.dart';
+import 'package:workout_timer/ui/workout/EditWorkout.dart';
 
-import '../WorkoutActiveScreen.dart';
+import '../countdown/WorkoutActiveScreen.dart';
 
 class WorkoutListItem extends StatelessWidget {
   final Workout workout;

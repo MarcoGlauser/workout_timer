@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:workout_timer/ui/WorkoutActiveScreen.dart';
+import 'package:workout_timer/ui/countdown/WorkoutActiveScreen.dart';
 import 'package:workout_timer/ui/exercise/AddExercise.dart';
 import 'package:workout_timer/ui/exercise/EditExercise.dart';
-import 'package:workout_timer/ui/screens/WorkoutListScreen.dart';
-import 'package:workout_timer/ui/screens/WorkoutScreen.dart';
+import 'package:workout_timer/ui/workout/WorkoutList.dart';
+import 'package:workout_timer/ui/workout/EditWorkout.dart';
 import 'package:workout_timer/ui/workout/AddWorkout.dart';
 
 

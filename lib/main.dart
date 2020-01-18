@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:workout_timer/provider/CountdownProvider.dart';
-import 'package:workout_timer/provider/DatabaseService.dart';
-import 'package:workout_timer/provider/StreamHandler.dart';
-import 'package:workout_timer/provider/WorkoutListProvider.dart';
+import 'package:workout_timer/services/CountdownProvider.dart';
+import 'package:workout_timer/services/DatabaseService.dart';
+import 'package:workout_timer/services/StreamHandler.dart';
+import 'package:workout_timer/services/WorkoutListProvider.dart';
 import 'package:workout_timer/router.dart';
 import 'package:workout_timer/theme.dart';
 

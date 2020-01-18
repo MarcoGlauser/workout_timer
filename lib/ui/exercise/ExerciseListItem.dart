@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_timer/models/Exercise.dart';
-import 'package:workout_timer/provider/StreamHandler.dart';
+import 'package:workout_timer/services/StreamHandler.dart';
 import 'package:workout_timer/ui/exercise/EditExercise.dart';
 
 class ExerciseListItem extends StatelessWidget {

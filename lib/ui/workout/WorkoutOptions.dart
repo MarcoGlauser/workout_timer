@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:workout_timer/models/Workout.dart';
-import 'package:workout_timer/provider/DatabaseService.dart';
+import 'package:workout_timer/services/DatabaseService.dart';
 
 class WorkoutOptions extends StatelessWidget{
 
